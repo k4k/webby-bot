@@ -10,10 +10,15 @@ import (
 	"golang.org/x/net/html"
 )
 
-func ircConnect(svr string, cnl string) {
+// Define you server, port and channel here
+const server = "irc.freenode.net"  // IRC Server
+const port = 6667                  // IRC Server Port
+const channel = "#somechannelhere" // IRC Channel
+
+func ircConnect(svr string, port int, cnl string) {
 	c := libirc.NewClient("webby", "webby-bot", "Webby Bot")
 
-	connErr := c.ConnectAndListen(fmt.Sprintf("%s:6667", svr))
+	connErr := c.ConnectAndListen(fmt.Sprintf("%s:%d", svr, port))
 	if connErr != nil {
 		panic(connErr)
 	}
@@ -50,7 +55,7 @@ func GetHtmlTitle(r io.Reader) (string, bool) {
 
 func main() {
 
-	ircConnect("irc.freenode.net", "#somechannelhere")
+	ircConnect(server, port, channel)
 	time.Sleep(time.Duration(5) * time.Second)
 
 	url := "http://google.com"
