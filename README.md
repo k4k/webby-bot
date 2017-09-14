@@ -14,3 +14,9 @@ $ cd webby-bot
 $ dep ensure
 $ go build
 ```
+
+# Using Webby
+
+Right now, the server and channel to join need to be statically defined before
+you build. I have plans to support a config file and command line flags for these
+down the road (maybe).

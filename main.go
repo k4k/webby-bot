@@ -50,7 +50,7 @@ func GetHtmlTitle(r io.Reader) (string, bool) {
 
 func main() {
 
-	ircConnect("irc.freenode.net", "#foaas")
+	ircConnect("irc.freenode.net", "#somechannelhere")
 	time.Sleep(time.Duration(5) * time.Second)
 
 	url := "http://google.com"
