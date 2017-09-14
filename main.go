@@ -1,11 +1,25 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"net/http"
+	"time"
 
+	"github.com/clarkf/libirc"
 	"golang.org/x/net/html"
 )
+
+func ircConnect(svr string, cnl string) {
+	c := libirc.NewClient("webby", "webby-bot", "Webby Bot")
+
+	connErr := c.ConnectAndListen(fmt.Sprintf("%s:6667", svr))
+	if connErr != nil {
+		panic(connErr)
+	}
+
+	c.Join(cnl)
+}
 
 func isTitleElement(n *html.Node) bool {
 	return n.Type == html.ElementNode && n.Data == "title"
@@ -35,6 +49,10 @@ func GetHtmlTitle(r io.Reader) (string, bool) {
 }
 
 func main() {
+
+	ircConnect("irc.freenode.net", "#foaas")
+	time.Sleep(time.Duration(5) * time.Second)
+
 	url := "http://google.com"
 	resp, getErr := http.Get(url)
 	if getErr != nil {
