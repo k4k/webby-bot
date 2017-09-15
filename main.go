@@ -17,9 +17,9 @@ import (
 const server = "irc.freenode.net" // IRC Server
 const port = 7000                 // IRC Server Port
 const channel = "#myircchannel"   // IRC Channel
-const nick = "urlbot"             // IRC Nick
-const username = "fooas-urlbot"   // IRC Username
-const realname = "FOAAS Urlbot"   // IRC Real Name
+const nick = "webby-urlbot"       // IRC Nick
+const username = "webby-urlbot"   // IRC Username
+const realname = "Webby Urlbot"   // IRC Real Name
 
 // IRC Functions
 func ircConnect(srv string, port int, ch string) {
