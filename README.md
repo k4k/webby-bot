@@ -5,8 +5,6 @@ parsing URLs to provide the URL title and a shortend URL.
 # Building
 
 Building requires go dep:
-`$ go get -u github.com/golang/dep/cmd/dep`
-
 
 ```
 $ git clone git@github.com:k4k/webby-bot.git
