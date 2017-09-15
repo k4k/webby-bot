@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/thoj/go-ircevent"
+	"github.com/zpnk/go-bitly"
 	"golang.org/x/net/html"
 )
 
@@ -20,6 +21,7 @@ const channel = "#myircchannel"   // IRC Channel
 const nick = "webby-urlbot"       // IRC Nick
 const username = "webby-urlbot"   // IRC Username
 const realname = "Webby Urlbot"   // IRC Real Name
+const token = "<token>"           // bitly OAuth Token
 
 // IRC Functions
 func ircConnect(srv string, port int, ch string) {
@@ -34,16 +36,27 @@ func ircConnect(srv string, port int, ch string) {
 		URL, urlstring := isURL(e.Message())
 		if URL {
 			title := getTitle(urlstring)
-			irccon.Privmsg(channel, title)
+			shortURL := shortenURL(urlstring)
+			irccon.Privmsg(channel, fmt.Sprintf("%s -- %s", shortURL, title))
 		}
 	})
 
 	//irccon.AddCallback("336", func(e *irc.Event) {})
 	err := irccon.Connect(fmt.Sprintf("%s:%d", server, port))
 	if err != nil {
-		fmt.Printf("Err %s", err)
+		fmt.Errorf("Err %s", err)
 	}
 	irccon.Loop()
+}
+
+// Bitly Functions
+func shortenURL(longurl string) string {
+	b := bitly.New(token)
+	shortURL, shortErr := b.Links.Shorten(longurl)
+	if shortErr != nil {
+		fmt.Errorf("Error: %s", shortErr)
+	}
+	return shortURL.URL
 }
 
 // HTML Functions

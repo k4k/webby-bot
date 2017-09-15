@@ -9,6 +9,12 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/zpnk/go-bitly"
+  packages = ["."]
+  revision = "2da97f724d1de30209b291f7870658888e304cca"
+
+[[projects]]
+  branch = "master"
   name = "golang.org/x/net"
   packages = ["html","html/atom"]
   revision = "859d1a86bb617c0c20d154590c3c5d3fcb670b07"
@@ -16,6 +22,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "78d806d81e3a51edb88ed1eb5c03ef3e04e0e7f07e21b2d7a7606cb3a5666fe4"
+  inputs-digest = "4088218bd941c68895051273452692b71206224cc1d7ebd1f61660227867b802"
   solver-name = "gps-cdcl"
   solver-version = 1
