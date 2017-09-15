@@ -17,6 +17,12 @@ $ go build
 
 # Using Webby
 
-Right now, the server and channel to join need to be statically defined before
-you build. I have plans to support a config file and command line flags for these
-down the road (maybe).
+Change these values before you build:
+
+const server = "irc.freenode.net" // IRC Server                                 
+const port = 7000                 // IRC Server Port                            
+const channel = "#myircchannel"   // IRC Channel                                
+const nick = "webby-urlbot"       // IRC Nick                                   
+const username = "webby-urlbot"   // IRC Username                               
+const realname = "Webby Urlbot"   // IRC Real Name```
+```
