@@ -1,5 +1,5 @@
 # Webby Bot
-Webby is an IRC bot written in Go. The initial goal is to provide helpers for
+Webby is an IRC bot written in Go. The primary goal is to provide helpers for
 parsing URLs to provide the URL title and a shortend URL.
 
 # Building
@@ -22,4 +22,5 @@ const channel = "#myircchannel"   // IRC Channel
 const nick = "webby-urlbot"       // IRC Nick                                   
 const username = "webby-urlbot"   // IRC Username                               
 const realname = "Webby Urlbot"   // IRC Real Name
+const token = "<token>"           // bitly OAuth Token
 ```
