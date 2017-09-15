@@ -4,8 +4,6 @@ parsing URLs to provide the URL title and a shortend URL.
 
 # Building
 
-Building requires go dep:
-
 ```
 $ git clone git@github.com:k4k/webby-bot.git
 $ cd webby-bot
