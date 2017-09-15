@@ -2,10 +2,10 @@
 
 
 [[projects]]
-  branch = "master"
-  name = "github.com/clarkf/libirc"
+  name = "github.com/thoj/go-ircevent"
   packages = ["."]
-  revision = "5b7ca00f47be28a1e48b6b60e8621d1c47156560"
+  revision = "a6b1561a016c2a4aae183c3ef152c25d134c095d"
+  version = "0.1"
 
 [[projects]]
   branch = "master"
@@ -16,6 +16,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "c5ec6dc78a732e0df7064608db0a2f1b363d44ced873edba5b364165f7d2b09d"
+  inputs-digest = "78d806d81e3a51edb88ed1eb5c03ef3e04e0e7f07e21b2d7a7606cb3a5666fe4"
   solver-name = "gps-cdcl"
   solver-version = 1

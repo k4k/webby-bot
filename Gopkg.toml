@@ -22,8 +22,8 @@
 
 
 [[constraint]]
-  branch = "master"
-  name = "github.com/clarkf/libirc"
+  name = "github.com/thoj/go-ircevent"
+  version = "0.1.0"
 
 [[constraint]]
   branch = "master"

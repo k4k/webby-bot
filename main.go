@@ -1,31 +1,52 @@
 package main
 
 import (
+	"crypto/tls"
 	"fmt"
 	"io"
 	"net/http"
-	"time"
+	"net/url"
+	"strings"
 
-	"github.com/clarkf/libirc"
+	"github.com/thoj/go-ircevent"
 	"golang.org/x/net/html"
 )
 
-// Define you server, port and channel here
-const server = "irc.freenode.net"  // IRC Server
-const port = 6667                  // IRC Server Port
-const channel = "#somechannelhere" // IRC Channel
+// Define your settings here.
+// TODO: Replace with config and cmd args using cobra
+const server = "irc.freenode.net" // IRC Server
+const port = 7000                 // IRC Server Port
+const channel = "#myircchannel"   // IRC Channel
+const nick = "urlbot"             // IRC Nick
+const username = "fooas-urlbot"   // IRC Username
+const realname = "FOAAS Urlbot"   // IRC Real Name
 
-func ircConnect(svr string, port int, cnl string) {
-	c := libirc.NewClient("webby", "webby-bot", "Webby Bot")
+// IRC Functions
+func ircConnect(srv string, port int, ch string) {
+	irccon := irc.IRC(nick, "FOAAS")
+	irccon.VerboseCallbackHandler = true
+	irccon.Debug = true
+	irccon.UseTLS = true
+	irccon.TLSConfig = &tls.Config{InsecureSkipVerify: true}
+	irccon.AddCallback("001", func(e *irc.Event) { irccon.Join(channel) })
+	irccon.AddCallback("PRIVMSG", func(e *irc.Event) {
 
-	connErr := c.ConnectAndListen(fmt.Sprintf("%s:%d", svr, port))
-	if connErr != nil {
-		panic(connErr)
+		URL, urlstring := isURL(e.Message())
+		if URL {
+			title := getTitle(urlstring)
+			irccon.Privmsg(channel, title)
+		}
+	})
+
+	//irccon.AddCallback("336", func(e *irc.Event) {})
+	err := irccon.Connect(fmt.Sprintf("%s:%d", server, port))
+	if err != nil {
+		fmt.Printf("Err %s", err)
 	}
-
-	c.Join(cnl)
+	irccon.Loop()
 }
 
+// HTML Functions
 func isTitleElement(n *html.Node) bool {
 	return n.Type == html.ElementNode && n.Data == "title"
 }
@@ -53,21 +74,39 @@ func GetHtmlTitle(r io.Reader) (string, bool) {
 	return traverse(doc)
 }
 
-func main() {
+func getTitle(gettitle string) string {
 
-	ircConnect(server, port, channel)
-	time.Sleep(time.Duration(5) * time.Second)
-
-	url := "http://google.com"
-	resp, getErr := http.Get(url)
+	resp, getErr := http.Get(gettitle)
+	var title string
 	if getErr != nil {
 		panic(getErr)
 	}
 	defer resp.Body.Close()
 
-	if title, ok := GetHtmlTitle(resp.Body); ok {
-		println(title)
-	} else {
-		println("No title found")
+	title, _ = GetHtmlTitle(resp.Body)
+	if title == "" {
+		title = "No title found"
 	}
+	return title
+}
+
+func isURL(checkurl string) (bool, string) {
+	var realURL bool = false
+	var realItem string = ""
+	urlslice := strings.Split(checkurl, " ")
+	for _, item := range urlslice {
+		u, err := url.Parse(item)
+		if err == nil {
+			if u.Scheme == "http" || u.Scheme == "https" {
+				realURL = true
+				realItem = item
+				break
+			}
+		}
+	}
+	return realURL, realItem
+}
+
+func main() {
+	ircConnect(server, port, channel)
 }
