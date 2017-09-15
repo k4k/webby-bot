@@ -11,8 +11,8 @@ Building requires go dep:
 ```
 $ git clone git@github.com:k4k/webby-bot.git
 $ cd webby-bot
-$ dep ensure
-$ go build
+$ make dep
+$ make build
 ```
 
 # Using Webby
