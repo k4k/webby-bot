@@ -47,11 +47,15 @@ func ircConnect(srv string, port int, ch string) {
 	irccon.AddCallback("001", func(e *irc.Event) { irccon.Join(channel) })
 	irccon.AddCallback("PRIVMSG", func(e *irc.Event) {
 
-		URL, urlstring := isURL(e.Message())
-		if URL {
-			title := getTitle(urlstring)
-			shortURL := shortenURL(urlstring)
-			irccon.Privmsg(channel, fmt.Sprintf("%s -- %s", shortURL, title))
+		if e.Message() == "!ping" {
+			irccon.Privmsg(channel, fmt.Sprintf("pong"))
+		} else {
+			URL, urlstring := isURL(e.Message())
+			if URL {
+				title := getTitle(urlstring)
+				shortURL := shortenURL(urlstring)
+				irccon.Privmsg(channel, fmt.Sprintf("%s -- %s", shortURL, title))
+			}
 		}
 	})
 
